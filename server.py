@@ -16,3 +16,12 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 print(f"✅ suivikhatma en ligne sur le port {PORT}")
 with socketserver.TCPServer(("", PORT), Handler) as httpd:
     httpd.serve_forever()
+async def post_init(application):
+    await application.bot.delete_webhook(drop_pending_updates=True)
+
+app = (
+    ApplicationBuilder()
+    .token(TOKEN)
+    .post_init(post_init)
+    .build()
+)
