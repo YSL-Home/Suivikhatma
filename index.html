@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>suivikhatma</title>
+<title>متابعة الختمة</title>
 <link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"><\/script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Amiri', serif; background: #eee8da; min-height: 100vh; padding: 1rem; }
-.controls { display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
-.ctrl-btn { background: #1a4a6b; color: #fff; border: none; padding: 0.5rem 1.1rem; border-radius: 8px; font-family: 'Amiri', serif; font-size: 1rem; cursor: pointer; transition: background 0.18s; white-space: nowrap; }
+.controls { display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
+
+.ctrl-btn { background: #1a4a6b; color: #fff; border: none; padding: 0.5rem 1.1rem; border-radius: 8px; font-family: 'Amiri', serif; font-size: 1rem; cursor: pointer; transition: background 0.18s; white-space: nowrap; line-height: 1.4; text-align: center; }
 .ctrl-btn:hover { background: #0f2f45; }
 .ctrl-btn:disabled { opacity: 0.5; cursor: wait; }
 .ctrl-btn.green { background: #1e6b3a; }
@@ -23,7 +24,7 @@ body { font-family: 'Amiri', serif; background: #eee8da; min-height: 100vh; padd
 .overlay.open { display: flex; }
 .sheet { background: #fff; border-radius: 20px 20px 0 0; padding: 1.2rem 1rem 2.5rem; width: 100%; max-width: 460px; animation: up 0.22s ease; }
 @keyframes up { from{transform:translateY(100%)} to{transform:translateY(0)} }
-.sheet-title { text-align: center; font-family: 'Amiri', serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 1rem; color: #111; }
+.sheet-title { text-align: center; font-family: 'Amiri', serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 1rem; color: #111; direction: rtl; }
 .sheet-handle { width: 40px; height: 4px; background: #ddd; border-radius: 4px; margin: 0 auto 1rem; }
 .sheet-opts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; margin-bottom: 1rem; }
 .sheet-opt { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; padding: 0.8rem 0.3rem; border-radius: 12px; border: none; background: #f4f4f4; cursor: pointer; font-family: 'Amiri', serif; font-size: 0.82rem; color: #222; transition: background 0.15s; }
@@ -39,10 +40,10 @@ body { font-family: 'Amiri', serif; background: #eee8da; min-height: 100vh; padd
 .col-left { border-right: 2.5px solid #1a4a6b; }
 table { width: 100%; border-collapse: collapse; }
 thead tr { background: #1a4a6b; color: #fff; }
-thead th { padding: 0.4rem 0.6rem; font-size: 0.92rem; font-weight: 700; text-align: left; letter-spacing: 0.04em; }
+thead th { padding: 0.4rem 0.6rem; font-size: 0.92rem; font-weight: 700; text-align: left; }
 thead th.n { width: 54px; text-align: center; }
 tbody tr:nth-child(even) { background: #eef4ff; }
-tbody tr:nth-child(odd) { background: #fff; }
+tbody tr:nth-child(odd)  { background: #fff; }
 tbody td { padding: 0.28rem 0.6rem; font-size: 0.88rem; border-bottom: 1px solid #cdd8ee; color: #111; }
 tbody td.n { text-align: center; font-weight: 700; color: #1a4a6b; width: 54px; border-right: 1px solid #cdd8ee; background: #dbeafe !important; }
 .card-footer { background: #1a4a6b; color: #fff; text-align: center; padding: 0.35rem; font-size: 0.8rem; font-family: 'Amiri', serif; }
@@ -61,26 +62,26 @@ tbody td.n { text-align: center; font-weight: 700; color: #1a4a6b; width: 54px; 
 <div class="overlay" id="overlay" onclick="overlayClick(event)">
   <div class="sheet">
     <div class="sheet-handle"></div>
-    <div class="sheet-title">Partager la liste du jour</div>
+    <div class="sheet-title">مشاركة قائمة اليوم</div>
     <div class="sheet-opts">
-      <button class="sheet-opt" onclick="shareVia('whatsapp')"><span class="ico">💬</span>WhatsApp</button>
-      <button class="sheet-opt" onclick="shareVia('telegram')"><span class="ico">✈️</span>Telegram</button>
-      <button class="sheet-opt" onclick="shareVia('other')"><span class="ico">📤</span>Autres</button>
+      <button class="sheet-opt" onclick="shareVia('whatsapp')"><span class="ico">💬</span>واتساب</button>
+      <button class="sheet-opt" onclick="shareVia('telegram')"><span class="ico">✈️</span>تيليغرام</button>
+      <button class="sheet-opt" onclick="shareVia('download')"><span class="ico">⬇️</span>تحميل</button>
     </div>
-    <button class="sheet-cancel" onclick="closeSheet()">Annuler</button>
+    <button class="sheet-cancel" onclick="closeSheet()">إلغاء</button>
   </div>
 </div>
 <div class="controls">
-  <button class="ctrl-btn" onclick="prevDay()">◀ Jour précédent</button>
+  <button class="ctrl-btn" onclick="prevDay()">◀ Jour précédent<br><span style="font-size:0.8em;opacity:0.85">اليوم السابق</span></button>
   <div class="day-badge">
     <span style="font-size:0.78rem;opacity:0.65;">Jour&nbsp;</span>
     <span id="dayNum">78</span>
     <span style="font-size:0.78rem;opacity:0.65;">&nbsp;—&nbsp;</span>
     <input type="date" id="datePicker" value="2026-04-02" onchange="onDateChange(this.value)">
   </div>
-  <button class="ctrl-btn" onclick="nextDay()">Jour suivant ▶</button>
-  <button class="ctrl-btn green" id="saveBtn" onclick="doSave()">💾 Enregistrer</button>
-  <button class="ctrl-btn purple" id="shareBtn" onclick="openSheet()">📤 Partager</button>
+  <button class="ctrl-btn" onclick="nextDay()">Jour suivant ▶<br><span style="font-size:0.8em;opacity:0.85">اليوم التالي</span></button>
+  <button class="ctrl-btn green" id="saveBtn" onclick="doSave()">💾 Enregistrer<br><span style="font-size:0.8em;opacity:0.85">حفظ</span></button>
+  <button class="ctrl-btn purple" id="shareBtn" onclick="openSheet()">📤 Partager<br><span style="font-size:0.8em;opacity:0.85">مشاركة</span></button>
 </div>
 <div class="card" id="card">
   <div class="card-header">
@@ -95,10 +96,10 @@ tbody td.n { text-align: center; font-weight: 700; color: #1a4a6b; width: 54px; 
       <table><thead><tr><th class="n">HIZB</th><th>NOM</th></tr></thead><tbody id="rightBody"></tbody></table>
     </div>
   </div>
-  <div class="card-footer" id="footer">suivikhatma — Jour 78</div>
+  <div class="card-footer" id="footer">متابعة الختمة — اليوم 78</div>
 </div>
 <script>
-const NAMES = [
+const NAMES=[
   "Houda Lahkim 3","Lebbar Mehdi","Touria Lebbar 7","Asmae Lebbar 1","Ali idrissi youbi",
   "Rachida Azmi","Mohammed Azmi","Sara Azmi 1","Sara Azmi 2","Iatissam Azmi 1",
   "Ibrahim Azmi","Meftaha Lahkim 4","Sanae Lahkim 2","Mariam lebbar","Marouane Zidate",
@@ -112,23 +113,22 @@ const NAMES = [
   "Touria Lebbar 3","Sanae Lahkim 4","Meriem Lahkim 1","Sanae Lahkim 1","Mehdi Idrissi Youbi",
   "Samira Lahkim 1","Noureddine Lebbar","Touria Lebbar 4","Houda Lahkim 1","Houda Lahkim 2"
 ];
-const N = 60;
-const REF_DATE = new Date(2026, 3, 2);
-const REF_DAY  = 78;
-let currentDate = new Date(2026, 3, 2);
-function fmt(d) { return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear(); }
-function toISO(d) { return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
-function diff(a,b) { return Math.round((a-b)/86400000); }
-function render() {
-  const d=diff(currentDate,REF_DATE), dayNum=REF_DAY+d;
+const N=60, REF_DATE=new Date(2026,3,2), REF_DAY=78;
+let currentDate=new Date(2026,3,2);
+function fmt(d){return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear();}
+function toISO(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function diff(a,b){return Math.round((a-b)/86400000);}
+function render(){
+  const d=diff(currentDate,REF_DATE),dayNum=REF_DAY+d;
   document.getElementById('dateDisplay').textContent=fmt(currentDate);
   document.getElementById('dayNum').textContent=dayNum;
+  // dayNumAr removed
   document.getElementById('datePicker').value=toISO(currentDate);
-  document.getElementById('footer').textContent='suivikhatma — Jour '+dayNum;
-  const lb=document.getElementById('leftBody'), rb=document.getElementById('rightBody');
+  document.getElementById('footer').textContent='متابعة الختمة — اليوم '+dayNum;
+  const lb=document.getElementById('leftBody'),rb=document.getElementById('rightBody');
   lb.innerHTML=rb.innerHTML='';
   for(let h=1;h<=N;h++){
-    const idx=((h-1+d)%N+N)%N, tr=document.createElement('tr');
+    const idx=((h-1+d)%N+N)%N,tr=document.createElement('tr');
     tr.innerHTML='<td class="n">'+h+'</td><td>'+NAMES[idx]+'</td>';
     (h<=30?lb:rb).appendChild(tr);
   }
@@ -136,37 +136,64 @@ function render() {
 function nextDay(){currentDate=new Date(+currentDate+86400000);render();}
 function prevDay(){currentDate=new Date(+currentDate-86400000);render();}
 function onDateChange(v){const[y,m,day]=v.split('-').map(Number);currentDate=new Date(y,m-1,day);render();}
-function makeFile(filename,cb){
-  html2canvas(document.getElementById('card'),{scale:2,useCORS:true,allowTaint:true,backgroundColor:'#ffffff',logging:false}).then(canvas=>{
-    canvas.toBlob(blob=>{cb(new File([blob],filename,{type:'image/png'}));},'image/png');
+function getFilename(){const d=diff(currentDate,REF_DATE),dayNum=REF_DAY+d,ds=fmt(currentDate).replace(/\//g,'-');return'khatma_jour'+dayNum+'_'+ds+'.png';}
+function setBusy(id,busy,fr,ar){
+  ['saveBtn','shareBtn'].forEach(bid=>{
+    const b=document.getElementById(bid);
+    if(b&&b.id===id){b.disabled=busy;b.textContent=busy?'⏳...':fr;}
   });
 }
-function getFilename(){const d=diff(currentDate,REF_DATE),dayNum=REF_DAY+d,ds=fmt(currentDate).replace(/\//g,'-');return'suivikhatma_jour'+dayNum+'_'+ds+'.png';}
-function setBusy(id,busy,label){const b=document.getElementById(id);b.disabled=busy;b.textContent=busy?'⏳...':label;}
+function makeCanvas(cb){
+  html2canvas(document.getElementById('card'),{scale:2,useCORS:true,allowTaint:true,backgroundColor:'#ffffff',logging:false}).then(cb);
+}
 function doSave(){
-  setBusy('saveBtn',true,'💾 Enregistrer');
-  makeFile(getFilename(),async file=>{
-    try{
-      if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'suivikhatma'});}
-      else{const url=URL.createObjectURL(file);const a=Object.assign(document.createElement('a'),{href:url,download:file.name});a.click();setTimeout(()=>URL.revokeObjectURL(url),3000);}
-    }catch(e){}
-    setBusy('saveBtn',false,'💾 Enregistrer');
+  document.getElementById('saveBtn').disabled=true;
+  document.getElementById('saveBtn').textContent='⏳...';
+  makeCanvas(canvas=>{
+    const a=document.createElement('a');
+    a.download=getFilename();
+    a.href=canvas.toDataURL('image/png');
+    document.body.appendChild(a);a.click();document.body.removeChild(a);
+    document.getElementById('saveBtn').disabled=false;
+    document.getElementById('saveBtn').innerHTML='💾 Enregistrer<br><span style="font-size:0.8em;opacity:0.85">حفظ</span>';
   });
 }
 function openSheet(){document.getElementById('overlay').classList.add('open');}
 function closeSheet(){document.getElementById('overlay').classList.remove('open');}
 function overlayClick(e){if(e.target===document.getElementById('overlay'))closeSheet();}
+function downloadImg(canvas){
+  const a=document.createElement('a');
+  a.download=getFilename();
+  a.href=canvas.toDataURL('image/png');
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+}
 function shareVia(target){
-  closeSheet();setBusy('shareBtn',true,'📤 Partager');
-  makeFile(getFilename(),async file=>{
-    const caption='suivikhatma — Jour '+(REF_DAY+diff(currentDate,REF_DATE))+' — '+fmt(currentDate);
-    const canFile=!!(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]}));
-    try{
-      if(target==='other'){if(canFile){await navigator.share({files:[file],title:'suivikhatma',text:caption});}else{const url=URL.createObjectURL(file);Object.assign(document.createElement('a'),{href:url,download:file.name}).click();setTimeout(()=>URL.revokeObjectURL(url),3000);}}
-      else if(target==='whatsapp'){if(canFile){await navigator.share({files:[file],text:caption});}else{const url=URL.createObjectURL(file);Object.assign(document.createElement('a'),{href:url,download:file.name}).click();setTimeout(()=>{URL.revokeObjectURL(url);window.open('https://web.whatsapp.com/','_blank');},1000);}}
-      else if(target==='telegram'){if(canFile){await navigator.share({files:[file],text:caption});}else{const url=URL.createObjectURL(file);Object.assign(document.createElement('a'),{href:url,download:file.name}).click();setTimeout(()=>{URL.revokeObjectURL(url);window.open('https://web.telegram.org/','_blank');},1000);}}
-    }catch(e){}
-    setBusy('shareBtn',false,'📤 Partager');
+  closeSheet();
+  document.getElementById('shareBtn').disabled=true;
+  document.getElementById('shareBtn').textContent='⏳...';
+  makeCanvas(async canvas=>{
+    const dayNum=REF_DAY+diff(currentDate,REF_DATE);
+    const caption='متابعة الختمة — اليوم '+dayNum+' — '+fmt(currentDate);
+    if(target==='download'){
+      downloadImg(canvas);
+    } else if(target==='whatsapp'){
+      downloadImg(canvas);
+      setTimeout(()=>window.open('https://wa.me/?text='+encodeURIComponent(caption),'_blank'),800);
+    } else if(target==='telegram'){
+      downloadImg(canvas);
+      setTimeout(()=>window.open('https://web.telegram.org/','_blank'),800);
+    }
+    if(navigator.share){
+      try{
+        canvas.toBlob(async blob=>{
+          const file=new File([blob],getFilename(),{type:'image/png'});
+          if(navigator.canShare&&navigator.canShare({files:[file]}))
+            await navigator.share({files:[file],title:'متابعة الختمة',text:caption});
+        },'image/png');
+      }catch(e){}
+    }
+    document.getElementById('shareBtn').disabled=false;
+    document.getElementById('shareBtn').innerHTML='📤 Partager<br><span style="font-size:0.8em;opacity:0.85">مشاركة</span>';
   });
 }
 render();
