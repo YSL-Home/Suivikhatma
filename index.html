@@ -9,56 +9,156 @@
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Amiri', serif; background: #eee8da; min-height: 100vh; padding: 1rem; }
-.controls { display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
 
-.ctrl-btn { background: #1a4a6b; color: #fff; border: none; padding: 0.5rem 1.1rem; border-radius: 8px; font-family: 'Amiri', serif; font-size: 1rem; cursor: pointer; transition: background 0.18s; white-space: nowrap; line-height: 1.4; text-align: center; }
-.ctrl-btn:hover { background: #0f2f45; }
+/* ── Barre de contrôle ── */
+.controls {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0.6rem; margin-bottom: 1.4rem; flex-wrap: wrap;
+}
+.ctrl-btn {
+  background: #1a4a6b; color: #fff; border: none;
+  padding: 0.55rem 1.2rem; border-radius: 8px;
+  font-family: 'Amiri', serif; font-size: 1rem;
+  cursor: pointer; transition: background 0.18s;
+  white-space: nowrap; line-height: 1.5; text-align: center;
+}
+.ctrl-btn:hover  { background: #0f2f45; }
 .ctrl-btn:disabled { opacity: 0.5; cursor: wait; }
-.ctrl-btn.green { background: #1e6b3a; }
+.ctrl-btn.green  { background: #1e6b3a; }
 .ctrl-btn.green:hover { background: #134825; }
 .ctrl-btn.purple { background: #6b2fa0; }
 .ctrl-btn.purple:hover { background: #4a1f72; }
-.day-badge { display: flex; align-items: center; gap: 0.3rem; font-family: 'Amiri', serif; font-size: 1rem; font-weight: 700; color: #1a4a6b; background: #dbeafe; border: 2px solid #93c5fd; border-radius: 8px; padding: 0.4rem 0.9rem; }
-.day-badge input[type="date"] { font-family: 'Amiri', serif; font-size: 1rem; font-weight: 700; color: #1a4a6b; background: transparent; border: none; outline: none; cursor: pointer; width: 130px; }
+.day-badge {
+  display: flex; align-items: center; gap: 0.3rem;
+  font-family: 'Amiri', serif; font-size: 1rem; font-weight: 700;
+  color: #1a4a6b; background: #dbeafe;
+  border: 2px solid #93c5fd; border-radius: 8px; padding: 0.45rem 0.9rem;
+}
+.day-badge input[type="date"] {
+  font-family: 'Amiri', serif; font-size: 1rem; font-weight: 700;
+  color: #1a4a6b; background: transparent; border: none; outline: none;
+  cursor: pointer; width: 130px;
+}
+
+/* ── Bottom sheet ── */
 .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999; align-items: flex-end; justify-content: center; }
 .overlay.open { display: flex; }
 .sheet { background: #fff; border-radius: 20px 20px 0 0; padding: 1.2rem 1rem 2.5rem; width: 100%; max-width: 460px; animation: up 0.22s ease; }
 @keyframes up { from{transform:translateY(100%)} to{transform:translateY(0)} }
-.sheet-title { text-align: center; font-family: 'Amiri', serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 1rem; color: #111; direction: rtl; }
+.sheet-title { text-align: center; font-family: 'Amiri', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: #111; direction: rtl; }
 .sheet-handle { width: 40px; height: 4px; background: #ddd; border-radius: 4px; margin: 0 auto 1rem; }
 .sheet-opts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; margin-bottom: 1rem; }
-.sheet-opt { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; padding: 0.8rem 0.3rem; border-radius: 12px; border: none; background: #f4f4f4; cursor: pointer; font-family: 'Amiri', serif; font-size: 0.82rem; color: #222; transition: background 0.15s; }
+.sheet-opt { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; padding: 0.8rem 0.3rem; border-radius: 12px; border: none; background: #f4f4f4; cursor: pointer; font-family: 'Amiri', serif; font-size: 0.9rem; color: #222; transition: background 0.15s; }
 .sheet-opt:hover { background: #e5e5e5; }
-.sheet-opt .ico { font-size: 1.9rem; line-height: 1; }
+.sheet-opt .ico { font-size: 2rem; line-height: 1; }
 .sheet-cancel { width: 100%; padding: 0.75rem; background: #f0f0f0; border: none; border-radius: 10px; cursor: pointer; font-family: 'Amiri', serif; font-size: 1rem; color: #c0392b; font-weight: 700; }
 .sheet-cancel:hover { background: #e5e5e5; }
-.card { background: #fff; max-width: 880px; margin: 0 auto; border: 2.5px solid #1a4a6b; }
-.card-header { text-align: center; padding: 0.9rem 1rem 0.6rem; border-bottom: 2.5px solid #1a4a6b; }
-.basmala { font-family: 'Scheherazade New', serif; font-size: 2rem; color: #111; line-height: 1.7; direction: rtl; }
-.date-line { font-size: 1.45rem; font-weight: 700; color: #1a4a6b; letter-spacing: 0.05em; margin-top: 0.1rem; }
+
+/* ══════════════════════════════════
+   CARTE  — optimisée pour l'image
+   ══════════════════════════════════ */
+.card {
+  background: #fff;
+  max-width: 960px;
+  margin: 0 auto;
+  border: 3px solid #1a4a6b;
+  border-radius: 4px;
+  box-shadow: 0 2px 12px rgba(26,74,107,0.12);
+}
+
+/* En-tête */
+.card-header {
+  text-align: center;
+  padding: 1.1rem 1rem 0.7rem;
+  border-bottom: 3px solid #1a4a6b;
+  background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%);
+}
+.basmala {
+  font-family: 'Scheherazade New', serif;
+  font-size: 2.2rem; color: #1a1a1a;
+  line-height: 1.8; direction: rtl;
+}
+.date-line {
+  font-size: 1.5rem; font-weight: 700;
+  color: #1a4a6b; margin-top: 0.2rem;
+  letter-spacing: 0.06em;
+}
+
+/* Tableau */
 .table-wrap { display: grid; grid-template-columns: 1fr 1fr; }
-.col-left { border-right: 2.5px solid #1a4a6b; }
+.col-left   { border-right: 3px solid #1a4a6b; }
+
 table { width: 100%; border-collapse: collapse; }
-thead tr { background: #1a4a6b; color: #fff; }
-thead th { padding: 0.4rem 0.6rem; font-size: 0.92rem; font-weight: 700; text-align: left; }
-thead th.n { width: 54px; text-align: center; }
-tbody tr:nth-child(even) { background: #eef4ff; }
-tbody tr:nth-child(odd)  { background: #fff; }
-tbody td { padding: 0.28rem 0.6rem; font-size: 0.88rem; border-bottom: 1px solid #cdd8ee; color: #111; }
-tbody td.n { text-align: center; font-weight: 700; color: #1a4a6b; width: 54px; border-right: 1px solid #cdd8ee; background: #dbeafe !important; }
-.card-footer { background: #1a4a6b; color: #fff; text-align: center; padding: 0.35rem; font-size: 0.8rem; font-family: 'Amiri', serif; }
+
+/* En-tête de colonne */
+thead tr { background: #1a4a6b; }
+thead th {
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem; font-weight: 700;
+  color: #fff; text-align: center;
+  letter-spacing: 0.05em;
+}
+thead th.n { width: 60px; }
+thead th.name { text-align: center; }
+
+/* Lignes */
+tbody tr:nth-child(odd)  { background: #ffffff; }
+tbody tr:nth-child(even) { background: #eef5ff; }
+tbody tr:hover           { background: #dbeafe; }
+
+tbody td {
+  padding: 0.5rem 0.8rem;
+  border-bottom: 1px solid #d0dcee;
+  vertical-align: middle;
+}
+
+/* Numéro du hizb */
+tbody td.n {
+  text-align: center;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #fff;
+  width: 60px;
+  border-right: 1px solid #d0dcee;
+  background: #1a4a6b !important;
+}
+
+/* Nom de la personne */
+tbody td.name {
+  text-align: center;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  letter-spacing: 0.01em;
+  padding: 0.55rem 0.7rem;
+}
+
+/* Pied */
+.card-footer {
+  background: #1a4a6b; color: #fff;
+  text-align: center;
+  padding: 0.5rem;
+  font-size: 0.95rem;
+  font-family: 'Amiri', serif;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+/* Print */
 @media print {
   body { background: #fff; padding: 0; }
   .controls, .overlay { display: none !important; }
-  .card { max-width: 100%; }
-  thead tr { background: #222 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  tbody tr:nth-child(even) { background: #eef4ff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  tbody td.n { background: #dbeafe !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .card-footer { background: #222 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .card { max-width: 100%; box-shadow: none; }
+  thead tr { background: #1a4a6b !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  tbody tr:nth-child(even) { background: #eef5ff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  tbody td.n { background: #1a4a6b !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .card-footer { background: #1a4a6b !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 </style>
 </head>
 <body>
+
+<!-- Bottom sheet -->
 <div class="overlay" id="overlay" onclick="overlayClick(event)">
   <div class="sheet">
     <div class="sheet-handle"></div>
@@ -71,18 +171,34 @@ tbody td.n { text-align: center; font-weight: 700; color: #1a4a6b; width: 54px; 
     <button class="sheet-cancel" onclick="closeSheet()">إلغاء</button>
   </div>
 </div>
+
+<!-- Contrôles -->
 <div class="controls">
-  <button class="ctrl-btn" onclick="prevDay()">◀ Jour précédent<br><span style="font-size:0.8em;opacity:0.85">اليوم السابق</span></button>
+  <button class="ctrl-btn" onclick="prevDay()">
+    ◀ Jour précédent<br>
+    <span style="font-size:0.82em;opacity:0.9">اليوم السابق</span>
+  </button>
   <div class="day-badge">
-    <span style="font-size:0.78rem;opacity:0.65;">Jour&nbsp;</span>
+    <span style="font-size:0.78rem;opacity:0.65">Jour&nbsp;</span>
     <span id="dayNum">78</span>
-    <span style="font-size:0.78rem;opacity:0.65;">&nbsp;—&nbsp;</span>
+    <span style="font-size:0.78rem;opacity:0.65">&nbsp;—&nbsp;</span>
     <input type="date" id="datePicker" value="2026-04-02" onchange="onDateChange(this.value)">
   </div>
-  <button class="ctrl-btn" onclick="nextDay()">Jour suivant ▶<br><span style="font-size:0.8em;opacity:0.85">اليوم التالي</span></button>
-  <button class="ctrl-btn green" id="saveBtn" onclick="doSave()">💾 Enregistrer<br><span style="font-size:0.8em;opacity:0.85">حفظ</span></button>
-  <button class="ctrl-btn purple" id="shareBtn" onclick="openSheet()">📤 Partager<br><span style="font-size:0.8em;opacity:0.85">مشاركة</span></button>
+  <button class="ctrl-btn" onclick="nextDay()">
+    Jour suivant ▶<br>
+    <span style="font-size:0.82em;opacity:0.9">اليوم التالي</span>
+  </button>
+  <button class="ctrl-btn green" id="saveBtn" onclick="doSave()">
+    💾 Enregistrer<br>
+    <span style="font-size:0.82em;opacity:0.9">حفظ</span>
+  </button>
+  <button class="ctrl-btn purple" id="shareBtn" onclick="openSheet()">
+    📤 Partager<br>
+    <span style="font-size:0.82em;opacity:0.9">مشاركة</span>
+  </button>
 </div>
+
+<!-- Carte -->
 <div class="card" id="card">
   <div class="card-header">
     <div class="basmala">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
@@ -90,14 +206,21 @@ tbody td.n { text-align: center; font-weight: 700; color: #1a4a6b; width: 54px; 
   </div>
   <div class="table-wrap">
     <div class="col-left">
-      <table><thead><tr><th class="n">HIZB</th><th>NOM</th></tr></thead><tbody id="leftBody"></tbody></table>
+      <table>
+        <thead><tr><th class="n">HIZB</th><th class="name">NOM</th></tr></thead>
+        <tbody id="leftBody"></tbody>
+      </table>
     </div>
     <div class="col-right">
-      <table><thead><tr><th class="n">HIZB</th><th>NOM</th></tr></thead><tbody id="rightBody"></tbody></table>
+      <table>
+        <thead><tr><th class="n">HIZB</th><th class="name">NOM</th></tr></thead>
+        <tbody id="rightBody"></tbody>
+      </table>
     </div>
   </div>
   <div class="card-footer" id="footer">متابعة الختمة — اليوم 78</div>
 </div>
+
 <script>
 const NAMES=[
   "Houda Lahkim 3","Lebbar Mehdi","Touria Lebbar 7","Asmae Lebbar 1","Ali idrissi youbi",
@@ -114,88 +237,112 @@ const NAMES=[
   "Samira Lahkim 1","Noureddine Lebbar","Touria Lebbar 4","Houda Lahkim 1","Houda Lahkim 2"
 ];
 const N=60, REF_DATE=new Date(2026,3,2), REF_DAY=78;
-let currentDate=new Date(2026,3,2);
+// Toujours démarrer sur la date du jour
+let currentDate=new Date();
+currentDate.setHours(0,0,0,0); // minuit local
+
 function fmt(d){return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear();}
 function toISO(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function diff(a,b){return Math.round((a-b)/86400000);}
+
 function render(){
-  const d=diff(currentDate,REF_DATE),dayNum=REF_DAY+d;
+  const d=diff(currentDate,REF_DATE), dayNum=REF_DAY+d;
   document.getElementById('dateDisplay').textContent=fmt(currentDate);
   document.getElementById('dayNum').textContent=dayNum;
-  // dayNumAr removed
   document.getElementById('datePicker').value=toISO(currentDate);
   document.getElementById('footer').textContent='متابعة الختمة — اليوم '+dayNum;
-  const lb=document.getElementById('leftBody'),rb=document.getElementById('rightBody');
+  const lb=document.getElementById('leftBody'), rb=document.getElementById('rightBody');
   lb.innerHTML=rb.innerHTML='';
   for(let h=1;h<=N;h++){
-    const idx=((h-1+d)%N+N)%N,tr=document.createElement('tr');
-    tr.innerHTML='<td class="n">'+h+'</td><td>'+NAMES[idx]+'</td>';
+    const idx=((h-1-d)%N+N)%N;
+    const tr=document.createElement('tr');
+    tr.innerHTML='<td class="n">'+h+'</td><td class="name">'+NAMES[idx]+'</td>';
     (h<=30?lb:rb).appendChild(tr);
   }
 }
+
 function nextDay(){currentDate=new Date(+currentDate+86400000);render();}
 function prevDay(){currentDate=new Date(+currentDate-86400000);render();}
 function onDateChange(v){const[y,m,day]=v.split('-').map(Number);currentDate=new Date(y,m-1,day);render();}
-function getFilename(){const d=diff(currentDate,REF_DATE),dayNum=REF_DAY+d,ds=fmt(currentDate).replace(/\//g,'-');return'khatma_jour'+dayNum+'_'+ds+'.png';}
-function setBusy(id,busy,fr,ar){
-  ['saveBtn','shareBtn'].forEach(bid=>{
-    const b=document.getElementById(bid);
-    if(b&&b.id===id){b.disabled=busy;b.textContent=busy?'⏳...':fr;}
-  });
+
+function getFilename(){
+  const d=diff(currentDate,REF_DATE), dayNum=REF_DAY+d;
+  return 'khatma_jour'+dayNum+'_'+fmt(currentDate).replace(/\//g,'-')+'.png';
 }
+
 function makeCanvas(cb){
-  html2canvas(document.getElementById('card'),{scale:2,useCORS:true,allowTaint:true,backgroundColor:'#ffffff',logging:false}).then(cb);
+  html2canvas(document.getElementById('card'),{
+    scale:2, useCORS:true, allowTaint:true,
+    backgroundColor:'#ffffff', logging:false
+  }).then(cb);
 }
-function doSave(){
-  document.getElementById('saveBtn').disabled=true;
-  document.getElementById('saveBtn').textContent='⏳...';
-  makeCanvas(canvas=>{
-    const a=document.createElement('a');
-    a.download=getFilename();
-    a.href=canvas.toDataURL('image/png');
-    document.body.appendChild(a);a.click();document.body.removeChild(a);
-    document.getElementById('saveBtn').disabled=false;
-    document.getElementById('saveBtn').innerHTML='💾 Enregistrer<br><span style="font-size:0.8em;opacity:0.85">حفظ</span>';
-  });
+
+function setBtnBusy(id, busy){
+  const b=document.getElementById(id);
+  if(!b) return;
+  b.disabled=busy;
+  if(busy){
+    b.textContent='⏳...';
+  } else {
+    const labels={
+      saveBtn:'💾 Enregistrer<br><span style="font-size:0.82em;opacity:0.9">حفظ</span>',
+      shareBtn:'📤 Partager<br><span style="font-size:0.82em;opacity:0.9">مشاركة</span>'
+    };
+    b.innerHTML=labels[id]||'';
+  }
 }
-function openSheet(){document.getElementById('overlay').classList.add('open');}
-function closeSheet(){document.getElementById('overlay').classList.remove('open');}
-function overlayClick(e){if(e.target===document.getElementById('overlay'))closeSheet();}
-function downloadImg(canvas){
+
+function downloadCanvas(canvas){
   const a=document.createElement('a');
   a.download=getFilename();
   a.href=canvas.toDataURL('image/png');
-  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
 }
+
+function doSave(){
+  setBtnBusy('saveBtn',true);
+  makeCanvas(canvas=>{
+    downloadCanvas(canvas);
+    setBtnBusy('saveBtn',false);
+  });
+}
+
+function openSheet(){document.getElementById('overlay').classList.add('open');}
+function closeSheet(){document.getElementById('overlay').classList.remove('open');}
+function overlayClick(e){if(e.target===document.getElementById('overlay'))closeSheet();}
+
 function shareVia(target){
   closeSheet();
-  document.getElementById('shareBtn').disabled=true;
-  document.getElementById('shareBtn').textContent='⏳...';
+  setBtnBusy('shareBtn',true);
   makeCanvas(async canvas=>{
     const dayNum=REF_DAY+diff(currentDate,REF_DATE);
     const caption='متابعة الختمة — اليوم '+dayNum+' — '+fmt(currentDate);
-    if(target==='download'){
-      downloadImg(canvas);
-    } else if(target==='whatsapp'){
-      downloadImg(canvas);
-      setTimeout(()=>window.open('https://wa.me/?text='+encodeURIComponent(caption),'_blank'),800);
+
+    // Toujours télécharger l'image d'abord
+    downloadCanvas(canvas);
+
+    // Ensuite ouvrir l'app si demandé
+    if(target==='whatsapp'){
+      setTimeout(()=>window.open('https://wa.me/?text='+encodeURIComponent(caption),'_blank'),600);
     } else if(target==='telegram'){
-      downloadImg(canvas);
-      setTimeout(()=>window.open('https://web.telegram.org/','_blank'),800);
+      setTimeout(()=>window.open('https://web.telegram.org/','_blank'),600);
     }
-    if(navigator.share){
+
+    // Web Share API en bonus sur mobile
+    if(target!=='download' && navigator.share){
       try{
         canvas.toBlob(async blob=>{
           const file=new File([blob],getFilename(),{type:'image/png'});
-          if(navigator.canShare&&navigator.canShare({files:[file]}))
+          if(navigator.canShare&&navigator.canShare({files:[file]})){
             await navigator.share({files:[file],title:'متابعة الختمة',text:caption});
+          }
         },'image/png');
       }catch(e){}
     }
-    document.getElementById('shareBtn').disabled=false;
-    document.getElementById('shareBtn').innerHTML='📤 Partager<br><span style="font-size:0.8em;opacity:0.85">مشاركة</span>';
+    setBtnBusy('shareBtn',false);
   });
 }
+
 render();
 </script>
 </body>
