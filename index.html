@@ -4,40 +4,50 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>متابعة الختمة</title>
-<link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Amiri', serif; background: #eee8da; min-height: 100vh; padding: 1rem; }
+body {
+  font-family: 'Cairo', sans-serif;
+  background: #f0ece4;
+  min-height: 100vh;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-/* ── Barre de contrôle ── */
+/* ── Contrôles ── */
 .controls {
   display: flex; align-items: center; justify-content: center;
-  gap: 0.6rem; margin-bottom: 1.4rem; flex-wrap: wrap;
+  gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;
+  width: 100%; max-width: 520px;
 }
 .ctrl-btn {
-  background: #1a4a6b; color: #fff; border: none;
-  padding: 0.55rem 1.2rem; border-radius: 8px;
-  font-family: 'Amiri', serif; font-size: 1rem;
+  background: #2c5f8a; color: #fff; border: none;
+  padding: 0.5rem 1rem; border-radius: 8px;
+  font-family: 'Cairo', sans-serif; font-size: 0.85rem; font-weight: 600;
   cursor: pointer; transition: background 0.18s;
-  white-space: nowrap; line-height: 1.5; text-align: center;
+  line-height: 1.4; text-align: center;
 }
-.ctrl-btn:hover  { background: #0f2f45; }
+.ctrl-btn:hover  { background: #1a3f5f; }
 .ctrl-btn:disabled { opacity: 0.5; cursor: wait; }
-.ctrl-btn.green  { background: #1e6b3a; }
-.ctrl-btn.green:hover { background: #134825; }
+.ctrl-btn.green  { background: #1e7a45; }
+.ctrl-btn.green:hover { background: #145730; }
 .ctrl-btn.purple { background: #6b2fa0; }
 .ctrl-btn.purple:hover { background: #4a1f72; }
+
 .day-badge {
   display: flex; align-items: center; gap: 0.3rem;
-  font-family: 'Amiri', serif; font-size: 1rem; font-weight: 700;
-  color: #1a4a6b; background: #dbeafe;
-  border: 2px solid #93c5fd; border-radius: 8px; padding: 0.45rem 0.9rem;
+  font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 700;
+  color: #2c5f8a; background: #dbeafe;
+  border: 2px solid #93c5fd; border-radius: 8px; padding: 0.4rem 0.8rem;
 }
 .day-badge input[type="date"] {
-  font-family: 'Amiri', serif; font-size: 1rem; font-weight: 700;
-  color: #1a4a6b; background: transparent; border: none; outline: none;
-  cursor: pointer; width: 130px;
+  font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 700;
+  color: #2c5f8a; background: transparent; border: none; outline: none;
+  cursor: pointer; width: 120px;
 }
 
 /* ── Bottom sheet ── */
@@ -45,103 +55,113 @@ body { font-family: 'Amiri', serif; background: #eee8da; min-height: 100vh; padd
 .overlay.open { display: flex; }
 .sheet { background: #fff; border-radius: 20px 20px 0 0; padding: 1.2rem 1rem 2.5rem; width: 100%; max-width: 460px; animation: up 0.22s ease; }
 @keyframes up { from{transform:translateY(100%)} to{transform:translateY(0)} }
-.sheet-title { text-align: center; font-family: 'Amiri', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: #111; direction: rtl; }
+.sheet-title { text-align: center; font-family: 'Cairo', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 1rem; color: #111; }
 .sheet-handle { width: 40px; height: 4px; background: #ddd; border-radius: 4px; margin: 0 auto 1rem; }
 .sheet-opts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; margin-bottom: 1rem; }
-.sheet-opt { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; padding: 0.8rem 0.3rem; border-radius: 12px; border: none; background: #f4f4f4; cursor: pointer; font-family: 'Amiri', serif; font-size: 0.9rem; color: #222; transition: background 0.15s; }
+.sheet-opt { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; padding: 0.8rem 0.3rem; border-radius: 12px; border: none; background: #f4f4f4; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 0.85rem; color: #222; transition: background 0.15s; }
 .sheet-opt:hover { background: #e5e5e5; }
-.sheet-opt .ico { font-size: 2rem; line-height: 1; }
-.sheet-cancel { width: 100%; padding: 0.75rem; background: #f0f0f0; border: none; border-radius: 10px; cursor: pointer; font-family: 'Amiri', serif; font-size: 1rem; color: #c0392b; font-weight: 700; }
-.sheet-cancel:hover { background: #e5e5e5; }
+.sheet-opt .ico { font-size: 1.8rem; line-height: 1; }
+.sheet-cancel { width: 100%; padding: 0.7rem; background: #f0f0f0; border: none; border-radius: 10px; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 0.95rem; color: #c0392b; font-weight: 700; }
 
-/* ══════════════════════════════════
-   CARTE  — optimisée pour l'image
-   ══════════════════════════════════ */
+/* ══════════════════════════════════════
+   CARTE — format portrait mobile
+   Largeur cible image : ~900px
+   ══════════════════════════════════════ */
 .card {
-  background: #fff;
-  max-width: 960px;
-  margin: 0 auto;
-  border: 3px solid #1a4a6b;
-  border-radius: 4px;
-  box-shadow: 0 2px 12px rgba(26,74,107,0.12);
+  width: 100%;
+  max-width: 520px;
+  background: #ffffff;
+  border: 2px solid #2c5f8a;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 3px 16px rgba(44,95,138,0.18);
 }
 
 /* En-tête */
 .card-header {
+  background: linear-gradient(160deg, #1a3f5f 0%, #2c5f8a 100%);
+  padding: 0.9rem 1rem 0.7rem;
   text-align: center;
-  padding: 1.1rem 1rem 0.7rem;
-  border-bottom: 3px solid #1a4a6b;
-  background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%);
 }
 .basmala {
   font-family: 'Scheherazade New', serif;
-  font-size: 2.2rem; color: #1a1a1a;
-  line-height: 1.8; direction: rtl;
+  font-size: 1.55rem; color: #f0d080;
+  line-height: 1.6; direction: rtl;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 .date-line {
-  font-size: 1.5rem; font-weight: 700;
-  color: #1a4a6b; margin-top: 0.2rem;
-  letter-spacing: 0.06em;
+  font-family: 'Cairo', sans-serif;
+  font-size: 1.15rem; font-weight: 700;
+  color: #ffffff; margin-top: 0.2rem;
+  letter-spacing: 0.08em;
 }
 
-/* Tableau */
-.table-wrap { display: grid; grid-template-columns: 1fr 1fr; }
-.col-left   { border-right: 3px solid #1a4a6b; }
+/* Corps — 2 colonnes */
+.table-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 2px solid #2c5f8a;
+}
+.col-left { border-right: 2px solid #2c5f8a; }
 
 table { width: 100%; border-collapse: collapse; }
 
 /* En-tête de colonne */
-thead tr { background: #1a4a6b; }
+thead tr { background: #2c5f8a; }
 thead th {
-  padding: 0.6rem 0.8rem;
-  font-size: 1rem; font-weight: 700;
+  padding: 0.35rem 0.4rem;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.72rem; font-weight: 700;
   color: #fff; text-align: center;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em; text-transform: uppercase;
 }
-thead th.n { width: 60px; }
-thead th.name { text-align: center; }
+thead th.n { width: 36px; }
 
 /* Lignes */
 tbody tr:nth-child(odd)  { background: #ffffff; }
-tbody tr:nth-child(even) { background: #eef5ff; }
-tbody tr:hover           { background: #dbeafe; }
+tbody tr:nth-child(even) { background: #f0f5ff; }
 
 tbody td {
-  padding: 0.5rem 0.8rem;
-  border-bottom: 1px solid #d0dcee;
+  padding: 0.22rem 0.35rem;
+  border-bottom: 1px solid #dce6f5;
   vertical-align: middle;
+  line-height: 1.3;
 }
 
-/* Numéro du hizb */
+/* Numéro hizb */
 tbody td.n {
   text-align: center;
-  font-size: 1.05rem;
-  font-weight: 800;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.72rem; font-weight: 800;
   color: #fff;
-  width: 60px;
-  border-right: 1px solid #d0dcee;
-  background: #1a4a6b !important;
+  width: 36px;
+  border-right: 1px solid #dce6f5;
+  background: #2c5f8a !important;
+  padding: 0.22rem 0.2rem;
 }
 
-/* Nom de la personne */
+/* Nom */
 tbody td.name {
   text-align: center;
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: #1a1a1a;
-  letter-spacing: 0.01em;
-  padding: 0.55rem 0.7rem;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.73rem; font-weight: 600;
+  color: #1a1a2e;
+  padding: 0.22rem 0.3rem;
 }
+
+/* Alternance légère sur nom */
+tbody tr:nth-child(even) td.n  { background: #224d70 !important; }
 
 /* Pied */
 .card-footer {
-  background: #1a4a6b; color: #fff;
+  background: linear-gradient(90deg, #1a3f5f, #2c5f8a);
+  color: #f0d080;
   text-align: center;
-  padding: 0.5rem;
-  font-size: 0.95rem;
-  font-family: 'Amiri', serif;
-  font-weight: 700;
-  letter-spacing: 0.03em;
+  padding: 0.42rem;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.04em;
+  border-top: 2px solid #2c5f8a;
 }
 
 /* Print */
@@ -149,10 +169,6 @@ tbody td.name {
   body { background: #fff; padding: 0; }
   .controls, .overlay { display: none !important; }
   .card { max-width: 100%; box-shadow: none; }
-  thead tr { background: #1a4a6b !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  tbody tr:nth-child(even) { background: #eef5ff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  tbody td.n { background: #1a4a6b !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .card-footer { background: #1a4a6b !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 </style>
 </head>
@@ -175,26 +191,22 @@ tbody td.name {
 <!-- Contrôles -->
 <div class="controls">
   <button class="ctrl-btn" onclick="prevDay()">
-    ◀ Jour précédent<br>
-    <span style="font-size:0.82em;opacity:0.9">اليوم السابق</span>
+    ◀ Précédent<br><span style="font-size:0.85em">اليوم السابق</span>
   </button>
   <div class="day-badge">
-    <span style="font-size:0.78rem;opacity:0.65">Jour&nbsp;</span>
+    <span style="font-size:0.75rem;opacity:0.7">J&nbsp;</span>
     <span id="dayNum">78</span>
-    <span style="font-size:0.78rem;opacity:0.65">&nbsp;—&nbsp;</span>
-    <input type="date" id="datePicker" value="2026-04-02" onchange="onDateChange(this.value)">
+    <span style="font-size:0.75rem;opacity:0.7">&nbsp;—&nbsp;</span>
+    <input type="date" id="datePicker" onchange="onDateChange(this.value)">
   </div>
   <button class="ctrl-btn" onclick="nextDay()">
-    Jour suivant ▶<br>
-    <span style="font-size:0.82em;opacity:0.9">اليوم التالي</span>
+    Suivant ▶<br><span style="font-size:0.85em">اليوم التالي</span>
   </button>
   <button class="ctrl-btn green" id="saveBtn" onclick="doSave()">
-    💾 Enregistrer<br>
-    <span style="font-size:0.82em;opacity:0.9">حفظ</span>
+    💾 Enregistrer<br><span style="font-size:0.85em">حفظ</span>
   </button>
   <button class="ctrl-btn purple" id="shareBtn" onclick="openSheet()">
-    📤 Partager<br>
-    <span style="font-size:0.82em;opacity:0.9">مشاركة</span>
+    📤 Partager<br><span style="font-size:0.85em">مشاركة</span>
   </button>
 </div>
 
@@ -202,23 +214,23 @@ tbody td.name {
 <div class="card" id="card">
   <div class="card-header">
     <div class="basmala">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
-    <div class="date-line" id="dateDisplay">02/04/2026</div>
+    <div class="date-line" id="dateDisplay">—</div>
   </div>
   <div class="table-wrap">
     <div class="col-left">
       <table>
-        <thead><tr><th class="n">HIZB</th><th class="name">NOM</th></tr></thead>
+        <thead><tr><th class="n">H</th><th>NOM / الاسم</th></tr></thead>
         <tbody id="leftBody"></tbody>
       </table>
     </div>
     <div class="col-right">
       <table>
-        <thead><tr><th class="n">HIZB</th><th class="name">NOM</th></tr></thead>
+        <thead><tr><th class="n">H</th><th>NOM / الاسم</th></tr></thead>
         <tbody id="rightBody"></tbody>
       </table>
     </div>
   </div>
-  <div class="card-footer" id="footer">متابعة الختمة — اليوم 78</div>
+  <div class="card-footer" id="footer">متابعة الختمة</div>
 </div>
 
 <script>
@@ -237,9 +249,10 @@ const NAMES=[
   "Samira Lahkim 1","Noureddine Lebbar","Touria Lebbar 4","Houda Lahkim 1","Houda Lahkim 2"
 ];
 const N=60, REF_DATE=new Date(2026,3,2), REF_DAY=78;
-// Toujours démarrer sur la date du jour
+
+// Toujours date du jour
 let currentDate=new Date();
-currentDate.setHours(0,0,0,0); // minuit local
+currentDate.setHours(0,0,0,0);
 
 function fmt(d){return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear();}
 function toISO(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
@@ -250,7 +263,7 @@ function render(){
   document.getElementById('dateDisplay').textContent=fmt(currentDate);
   document.getElementById('dayNum').textContent=dayNum;
   document.getElementById('datePicker').value=toISO(currentDate);
-  document.getElementById('footer').textContent='متابعة الختمة — اليوم '+dayNum;
+  document.getElementById('footer').textContent='متابعة الختمة — اليوم '+dayNum+' — '+fmt(currentDate);
   const lb=document.getElementById('leftBody'), rb=document.getElementById('rightBody');
   lb.innerHTML=rb.innerHTML='';
   for(let h=1;h<=N;h++){
@@ -266,30 +279,27 @@ function prevDay(){currentDate=new Date(+currentDate-86400000);render();}
 function onDateChange(v){const[y,m,day]=v.split('-').map(Number);currentDate=new Date(y,m-1,day);render();}
 
 function getFilename(){
-  const d=diff(currentDate,REF_DATE), dayNum=REF_DAY+d;
-  return 'khatma_jour'+dayNum+'_'+fmt(currentDate).replace(/\//g,'-')+'.png';
+  const d=diff(currentDate,REF_DATE),dayNum=REF_DAY+d;
+  return 'khatma_j'+dayNum+'_'+fmt(currentDate).replace(/\//g,'-')+'.png';
 }
 
 function makeCanvas(cb){
   html2canvas(document.getElementById('card'),{
-    scale:2, useCORS:true, allowTaint:true,
+    scale:3,
+    useCORS:true, allowTaint:true,
     backgroundColor:'#ffffff', logging:false
   }).then(cb);
 }
 
-function setBtnBusy(id, busy){
-  const b=document.getElementById(id);
-  if(!b) return;
+function setBtnBusy(id,busy){
+  const b=document.getElementById(id); if(!b)return;
   b.disabled=busy;
-  if(busy){
-    b.textContent='⏳...';
-  } else {
-    const labels={
-      saveBtn:'💾 Enregistrer<br><span style="font-size:0.82em;opacity:0.9">حفظ</span>',
-      shareBtn:'📤 Partager<br><span style="font-size:0.82em;opacity:0.9">مشاركة</span>'
-    };
-    b.innerHTML=labels[id]||'';
-  }
+  if(busy){ b.textContent='⏳...'; return; }
+  const labels={
+    saveBtn:'💾 Enregistrer<br><span style="font-size:0.85em">حفظ</span>',
+    shareBtn:'📤 Partager<br><span style="font-size:0.85em">مشاركة</span>'
+  };
+  b.innerHTML=labels[id]||'';
 }
 
 function downloadCanvas(canvas){
@@ -301,10 +311,7 @@ function downloadCanvas(canvas){
 
 function doSave(){
   setBtnBusy('saveBtn',true);
-  makeCanvas(canvas=>{
-    downloadCanvas(canvas);
-    setBtnBusy('saveBtn',false);
-  });
+  makeCanvas(canvas=>{ downloadCanvas(canvas); setBtnBusy('saveBtn',false); });
 }
 
 function openSheet(){document.getElementById('overlay').classList.add('open');}
@@ -317,25 +324,15 @@ function shareVia(target){
   makeCanvas(async canvas=>{
     const dayNum=REF_DAY+diff(currentDate,REF_DATE);
     const caption='متابعة الختمة — اليوم '+dayNum+' — '+fmt(currentDate);
-
-    // Toujours télécharger l'image d'abord
     downloadCanvas(canvas);
-
-    // Ensuite ouvrir l'app si demandé
-    if(target==='whatsapp'){
-      setTimeout(()=>window.open('https://wa.me/?text='+encodeURIComponent(caption),'_blank'),600);
-    } else if(target==='telegram'){
-      setTimeout(()=>window.open('https://web.telegram.org/','_blank'),600);
-    }
-
-    // Web Share API en bonus sur mobile
-    if(target!=='download' && navigator.share){
+    if(target==='whatsapp') setTimeout(()=>window.open('https://wa.me/?text='+encodeURIComponent(caption),'_blank'),600);
+    else if(target==='telegram') setTimeout(()=>window.open('https://web.telegram.org/','_blank'),600);
+    if(target!=='download'&&navigator.share){
       try{
         canvas.toBlob(async blob=>{
           const file=new File([blob],getFilename(),{type:'image/png'});
-          if(navigator.canShare&&navigator.canShare({files:[file]})){
+          if(navigator.canShare&&navigator.canShare({files:[file]}))
             await navigator.share({files:[file],title:'متابعة الختمة',text:caption});
-          }
         },'image/png');
       }catch(e){}
     }
